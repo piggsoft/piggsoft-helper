@@ -1,6 +1,8 @@
 package com.piggsoft.spring.boot.starter.helper.returnvalue;
 
+import com.piggsoft.spring.boot.starter.helper.returnvalue.annotation.ReturnValue;
 import org.springframework.core.MethodParameter;
+import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodReturnValueHandler;
 import org.springframework.web.method.support.ModelAndViewContainer;
@@ -35,6 +37,12 @@ public class HandlerMethodReturnValueHandlerProxy implements HandlerMethodReturn
         }
         Method method = (Method) executable;
         Class<?> returnTypeClass = method.getReturnType();
+
+        ReturnValue annotation = AnnotationUtils.findAnnotation(method, ReturnValue.class);
+        if (annotation != null && annotation.exclude()) {
+            delegate.handleReturnValue(returnValue, returnType, mavContainer, webRequest);
+            return;
+        }
 
         if (returnValue == null || Void.class.equals(returnTypeClass)) {
             delegate.handleReturnValue(transformer.transform(null), returnType, mavContainer, webRequest);

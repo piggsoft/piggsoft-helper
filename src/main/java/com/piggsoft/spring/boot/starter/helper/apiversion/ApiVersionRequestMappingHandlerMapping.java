@@ -5,13 +5,9 @@ import com.piggsoft.spring.boot.starter.helper.apiversion.annotation.ApiVersions
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.AnnotatedElementUtils;
 import org.springframework.core.annotation.AnnotationUtils;
-import org.springframework.util.AntPathMatcher;
 import org.springframework.util.ObjectUtils;
-import org.springframework.util.PathMatcher;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.condition.PatternsRequestCondition;
 import org.springframework.web.servlet.mvc.condition.RequestCondition;
-import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 import java.lang.reflect.Method;
@@ -24,19 +20,12 @@ import java.util.stream.Stream;
 public class ApiVersionRequestMappingHandlerMapping extends RequestMappingHandlerMapping {
 
     private ApiVersionProperties apiVersionProperties;
+    private ConditionFactory conditionFactory;
 
 
-    public ApiVersionRequestMappingHandlerMapping(ApiVersionProperties apiVersionProperties) {
+    public ApiVersionRequestMappingHandlerMapping(ApiVersionProperties apiVersionProperties, ConditionFactory conditionFactory) {
         this.apiVersionProperties = apiVersionProperties;
-    }
-
-    @Override
-    protected RequestMappingInfo createRequestMappingInfo(RequestMapping requestMapping, RequestCondition<?> customCondition) {
-        PathMatcher pathMatcher = super.getPathMatcher();
-        super.setPathMatcher(new AntPathMatcher());
-        RequestMappingInfo requestMappingInfo = super.createRequestMappingInfo(requestMapping, customCondition);
-        super.setPathMatcher(pathMatcher);
-        return requestMappingInfo;
+        this.conditionFactory = conditionFactory;
     }
 
 
@@ -107,7 +96,8 @@ public class ApiVersionRequestMappingHandlerMapping extends RequestMappingHandle
 
         String[] fullPaths = paths.stream().flatMap(path -> apiVersionValues.stream().map(apiVersion -> this.replacePlaceholder(path, apiVersion))).toArray(String[]::new);
 
-        return new PatternsRequestCondition(fullPaths);
+        /* return new PatternsRequestCondition(fullPaths);*/
+        return conditionFactory.create(fullPaths);
     }
 
 

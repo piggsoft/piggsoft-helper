@@ -16,20 +16,20 @@ public class WebMvcPropertiesListener implements ApplicationListener<Application
 
     @Override
     public void onApplicationEvent(ApplicationEnvironmentPreparedEvent event) {
-        ConfigurableEnvironment environment = event.getEnvironment();
+        /*ConfigurableEnvironment environment = event.getEnvironment();
         String value = environment.getProperty(path_matcher_key1);
         if (value == null) {
             environment.getProperty(path_matcher_key2);
-        }
-        String currentValue = WebMvcProperties.MatchingStrategy.ANT_PATH_MATCHER.name();
+        }*/
+        /*String currentValue = WebMvcProperties.MatchingStrategy.ANT_PATH_MATCHER.name();
         if (value != null && !currentValue.equalsIgnoreCase(value)) {
             throw new IllegalArgumentException("spring.mvc.pathmatch.matchingStrategy 必须是 " + currentValue);
-        }
-        if (value == null) {
+        }*/
+       /* if (value == null) {
             Map<String, Object> map = new HashMap<>();
             map.put(path_matcher_key1, currentValue);
             environment.getPropertySources().addFirst(new MapPropertySource(WebMvcPropertiesListener.class.getName(), map));
-        }
+        }*/
     }
 
 }

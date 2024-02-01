@@ -2,5 +2,5 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.piggsoft.spring.boot.starter.helper.PiggsoftHelperAutoConfiguration
 
 
-org.springframework.context.ApplicationListener=\
-  com.piggsoft.spring.boot.starter.helper.apiversion.listener.WebMvcPropertiesListener
+#org.springframework.context.ApplicationListener=\
+#  com.piggsoft.spring.boot.starter.helper.apiversion.listener.WebMvcPropertiesListener
