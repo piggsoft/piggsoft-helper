@@ -3,6 +3,7 @@ package com.piggsoft.spring.boot.starter.helper.apiversion;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.autoconfigure.web.servlet.WebMvcProperties;
 import org.springframework.boot.autoconfigure.web.servlet.WebMvcRegistrations;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -24,8 +25,8 @@ public class ApiVersionConfiguration {
 
     @ConditionalOnMissingClass("org.springframework.web.servlet.mvc.condition.PathPatternsRequestCondition")
     @Bean
-    public PatternsRequestConditionFactory patternsRequestConditionFactory() {
-        return new PatternsRequestConditionFactory();
+    public PatternsRequestConditionFactory patternsRequestConditionFactory(WebMvcProperties webMvcProperties) {
+        return new PatternsRequestConditionFactory(webMvcProperties);
     }
 
     @Bean
