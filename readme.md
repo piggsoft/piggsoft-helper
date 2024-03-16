@@ -34,7 +34,7 @@ request GET /api/1.0/home/search
 respinse search-version-base
 
 #version2
-request GET /api/1.0/home/search
+request GET /api/2.0/home/search
 respinse search-2.0
 
 #version3
